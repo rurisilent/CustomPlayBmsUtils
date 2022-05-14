@@ -7,8 +7,16 @@ namespace CustomPlayBmsUtils
 {
     public class BmsData
     {
+        public List<BmsSection> SectionList;
         public List<BmsDataBpm> DataBpmList;
         public List<BmsDataBlock> DataBlockList;
+
+        public BmsData()
+        {
+            SectionList = new List<BmsSection>();
+            DataBpmList = new List<BmsDataBpm>();
+            DataBlockList = new List<BmsDataBlock>();
+        }
     }
 
     public class BmsHeaderInfo
@@ -20,6 +28,12 @@ namespace CustomPlayBmsUtils
         public float BPM;
         public string Level;
         public int Difficulty;
+    }
+
+    public class BmsSection
+    {
+        public int ID;
+        public float Scale;
     }
 
     public class BmsTimestamp
