@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="LitJson">
+      <HintPath>..\..\..\Project 20210901\Muse Dash CustomPlay\Source Project\Muse Dash CustomPlay Editor\Assets\Plugins\LitJson.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
