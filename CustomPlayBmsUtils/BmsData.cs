@@ -199,7 +199,7 @@ namespace CustomPlayBmsUtils
         }
     }
 
-    class BmsTimestampComparer : IComparer<BmsTimestamp>
+    public class BmsTimestampComparer : IComparer<BmsTimestamp>
     {
         public int Compare(BmsTimestamp x, BmsTimestamp y)
         {
