@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CustomPlayBmsUtils
 {
-    static class BmsUtils
+    public static class BmsUtils
     {
         public static int HexToDec(string hexCode)
         {
