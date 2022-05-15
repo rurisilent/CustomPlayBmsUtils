@@ -36,11 +36,71 @@ namespace CustomPlayBmsUtils
         public float Scale;
     }
 
-    public class BmsTimestamp
+    public class BmsTimestamp : IComparable<BmsTimestamp>
     {
         public int Section;
         public int Numerator;
         public int Denominator;
+
+        public int CompareTo(BmsTimestamp obj)
+        {
+            if (Section > obj.Section) return 1;
+            else if (Section < obj.Section) return -1;
+            else
+            {
+                var xFloat = (float)Numerator / Denominator;
+                var yFloat = (float)obj.Numerator / obj.Denominator;
+
+                if (xFloat > yFloat)
+                {
+                    return 1;
+                }
+                else if (xFloat < yFloat) return -1;
+                else return 0;
+            }
+        }
+
+        public static bool operator >(BmsTimestamp x, BmsTimestamp y)
+        {
+            return x.CompareTo(y) > 0;
+        }
+
+        public static bool operator <(BmsTimestamp x, BmsTimestamp y)
+        {
+            return x.CompareTo(y) < 0;
+        }
+
+        public static bool operator >=(BmsTimestamp x, BmsTimestamp y)
+        {
+            return x.CompareTo(y) >= 0;
+        }
+
+        public static bool operator <=(BmsTimestamp x, BmsTimestamp y)
+        {
+            return x.CompareTo(y) <= 0;
+        }
+
+        public static bool operator ==(BmsTimestamp x, BmsTimestamp y)
+        {
+            return x.CompareTo(y) == 0;
+        }
+
+        public static bool operator !=(BmsTimestamp x, BmsTimestamp y)
+        {
+            return x.CompareTo(y) == 0;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != GetType()) return false;
+
+            return CompareTo((BmsTimestamp)obj) == 0;
+        }
+
+        public override int GetHashCode()
+        {
+            return Section * 10000 + Denominator * 100 + Numerator * 1;
+        }
     }
 
     public class BmsDataBpm : BmsTimestamp
@@ -136,6 +196,27 @@ namespace CustomPlayBmsUtils
         public void Reset()
         {
             _current = -1;
+        }
+    }
+
+    class BmsTimestampComparer : IComparer<BmsTimestamp>
+    {
+        public int Compare(BmsTimestamp x, BmsTimestamp y)
+        {
+            if (x.Section > y.Section) return 1;
+            else if (x.Section < y.Section) return -1;
+            else
+            {
+                var xFloat = (float)x.Numerator / x.Denominator;
+                var yFloat = (float)y.Numerator / y.Denominator;
+
+                if (xFloat > yFloat)
+                {
+                    return 1;
+                }
+                else if (xFloat < yFloat) return -1;
+                else return 0;
+            }
         }
     }
 }
