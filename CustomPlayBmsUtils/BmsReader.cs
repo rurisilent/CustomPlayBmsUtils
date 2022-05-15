@@ -7,8 +7,8 @@ namespace CustomPlayBmsUtils
 {
     public class BmsReader
     {
-        private BmsHeaderInfo _info;
-        private BmsData _data;
+        private BmsHeaderInfo _info = new BmsHeaderInfo();
+        private BmsData _data = new BmsData();
 
         public BmsHeaderInfo Info
         {
@@ -24,16 +24,14 @@ namespace CustomPlayBmsUtils
         /// Constructor
         /// </summary>
         /// <param name="path">BMS file path</param>
-        public BmsReader(string path)
+        public BmsReader(string bmsData)
         {
-            ReadBms(path);
+            ReadBms(bmsData);
         }
 
-        private void ReadBms(string path)
+        private void ReadBms(string bmsData)
         {
-            if (!File.Exists(path)) throw new BmsFileNotFoundException();
-            string bmsFile = File.ReadAllText(path);
-            string[] bmsLine = bmsFile.Split( new string[] { "\r\n" }, StringSplitOptions.None);
+            string[] bmsLine = bmsData.Split( new string[] { "\r\n" }, StringSplitOptions.None);
 
             int pt = 0; //a pointer to read all the files
             int limit = bmsLine.Length;
