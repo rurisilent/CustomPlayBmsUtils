@@ -85,6 +85,11 @@ namespace CustomPlayBmsUtils
                         while (nume < deno)
                         {
                             string code = noteList[nume * 2].ToString() + noteList[nume * 2 + 1].ToString();
+                            if (code == "00")
+                            {
+                                nume++;
+                                continue;
+                            }
                             int bpm = BmsUtils.HexToDec(code);
                             _data.DataBpmList.Add(new BmsDataBpm() { Section = sectionId, Denominator = deno, Numerator = nume, BPM = bpm });
                             nume++;
@@ -97,6 +102,11 @@ namespace CustomPlayBmsUtils
                         while (nume < deno)
                         {
                             string code = noteList[nume * 2].ToString() + noteList[nume * 2 + 1].ToString();
+                            if (code == "00")
+                            {
+                                nume++;
+                                continue;
+                            }
                             floatBpmList.TryGetValue(code, out var bpm);
                             _data.DataBpmList.Add(new BmsDataBpm() { Section = sectionId, Denominator = deno, Numerator = nume, BPM = bpm });
                             nume++;
@@ -109,6 +119,11 @@ namespace CustomPlayBmsUtils
                         while (nume < deno)
                         {
                             string code = noteList[nume * 2].ToString() + noteList[nume * 2 + 1].ToString();
+                            if (code == "00")
+                            {
+                                nume++;
+                                continue;
+                            }
                             _data.DataBlockList.Add(new BmsDataBlock { Section = sectionId, Denominator = deno, Numerator = nume, Code = code, Track = track });
                             nume++;
                         }
