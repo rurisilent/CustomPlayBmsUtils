@@ -77,5 +77,98 @@ namespace CustomPlayBmsUtils
             else
                 return type;
         }
+
+        /// <summary>
+        /// 时间戳转换为分数
+        /// </summary>
+        /// <param name="lTime">左边界</param>
+        /// <param name="rTime">右边界</param>
+        /// <param name="nTime">时间</param>
+        /// <returns>BMS 时间戳（Section = 0：精确结果，Section = 1：模糊结果）</returns>
+        public static BmsTimestamp TimestampToFraction(float lTime, float rTime, float nTime)
+        {
+            const float THRESHOLD = 0.001f;
+            const float DENO_LIMIT = 192;
+
+            float target = (nTime - lTime) / (rTime - lTime);
+
+            int deno = 1;
+            int nume = 0;
+            int direction = 1;
+            int section = 1;
+
+            float ret = 0;
+
+            while (deno <= DENO_LIMIT)
+            {
+                ret = (float)nume / deno;
+                if (Math.Abs(target - ret) <= THRESHOLD)
+                {
+                    section = 0;
+                    break;
+                }
+                else
+                {
+                    if (direction > 0) //right iterating
+                    {
+                        if (ret > target)
+                        {
+                            var tempDeno = deno + 1;
+                            deno *= tempDeno;
+                            nume *= tempDeno;
+
+                            do
+                            {
+                                nume++;
+                            } while (nume % (tempDeno - 1) != 0 && nume <= deno);
+
+                            if (nume > deno) nume = deno;
+                            tempDeno--;
+                            deno /= tempDeno;
+                            nume /= tempDeno;
+                            direction *= -1;
+                            nume += direction;
+                        }
+                        else
+                        {
+                            nume += direction;
+                        }
+                    }
+                    else //left iterating
+                    {
+                        if (ret < target)
+                        {
+                            var tempDeno = deno + 1;
+                            deno *= tempDeno;
+                            nume *= tempDeno;
+
+                            do
+                            {
+                                nume--;
+                            } while (nume % (tempDeno - 1) != 0 && nume >= 0);
+
+                            if (nume < 0) nume = 0;
+                            tempDeno--;
+                            deno /= tempDeno;
+                            nume /= tempDeno;
+                            direction *= -1;
+                            nume += direction;
+                        }
+                        else
+                        {
+                            nume += direction;
+                        }
+                    }
+                    
+                }
+            }
+
+            return new BmsTimestamp()
+            {
+                Denominator = deno,
+                Numerator = nume,
+                Section = section
+            };
+        }
     }
 }
