@@ -72,6 +72,13 @@ namespace CustomPlayBmsUtils
             Denominator = deno;
         }
 
+        public BmsTimestamp(BmsTimestamp other)
+        {
+            Section = other.Section;
+            Numerator = other.Numerator;
+            Denominator = other.Denominator;
+        }
+
         public int CompareTo(BmsTimestamp obj)
         {
             if (Section > obj.Section) return 1;
