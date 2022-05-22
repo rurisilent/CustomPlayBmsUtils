@@ -42,6 +42,22 @@ namespace CustomPlayBmsUtils
         public int Numerator;
         public int Denominator;
 
+        public float FractionData
+        {
+            get
+            {
+                return (float)Numerator / Denominator;
+            }
+        }
+
+        public float ImproperFractionData
+        {
+            get
+            {
+                return Section + (float)Numerator / Denominator;
+            }
+        }
+
         public BmsTimestamp()
         {
             Section = 0;
