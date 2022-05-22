@@ -42,6 +42,20 @@ namespace CustomPlayBmsUtils
         public int Numerator;
         public int Denominator;
 
+        public BmsTimestamp()
+        {
+            Section = 0;
+            Numerator = 0;
+            Denominator = 1;
+        }
+
+        public BmsTimestamp(int sec, int nume, int deno)
+        {
+            Section = sec;
+            Numerator = nume;
+            Denominator = deno;
+        }
+
         public int CompareTo(BmsTimestamp obj)
         {
             if (Section > obj.Section) return 1;
@@ -73,7 +87,6 @@ namespace CustomPlayBmsUtils
             if (a % b == 0) return b;
             else return Gcd(b, a % b);
         }
-        
 
         public static BmsTimestamp operator +(BmsTimestamp x, BmsTimestamp y)
         {
