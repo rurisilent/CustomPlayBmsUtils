@@ -42,9 +42,7 @@ namespace CustomPlayBmsUtils
                 return $"{type}_{actualTrack}";
             }
             else if (type == "double" ||
-                type == "punch" ||
-                type == "boss_ra_punch" ||
-                type == "boss_ra_punch_out")
+                type == "punch")
             {
                 return $"{type}_ra";
             }
@@ -53,6 +51,8 @@ namespace CustomPlayBmsUtils
                 type == "boss_ra_out" ||
                 type == "boss_ra_atk_1" ||
                 type == "boss_ra_atk_1_wait" ||
+                type == "boss_ra_punch" ||
+                type == "boss_ra_punch_out" ||
                 type == "boss_ra_far_atk_1_start" ||
                 type == "boss_ra_far_atk_2_start" ||
                 type == "boss_ra_far_atk_1_end" ||
