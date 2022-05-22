@@ -60,6 +60,48 @@ namespace CustomPlayBmsUtils
             }
         }
 
+        public void Simplify()
+        {
+            int gcd = Gcd(Denominator, Numerator);
+            Denominator /= gcd;
+            Numerator /= gcd;
+        }
+
+        private static int Gcd(int a, int b)
+        {
+            if (a <= 0 || b <= 0) return 0;
+            if (a % b == 0) return b;
+            else return Gcd(b, a % b);
+        }
+        
+
+        public static BmsTimestamp operator +(BmsTimestamp x, BmsTimestamp y)
+        {
+            int xDeno = x.Denominator;
+            int xNume = x.Numerator + x.Denominator * x.Section;
+            int yDeno = y.Denominator;
+            int yNume = y.Numerator + y.Denominator * y.Section;
+
+            var tmpDeno = xDeno;
+            xDeno *= yDeno;
+            xNume *= yDeno;
+            yDeno *= tmpDeno;
+            yNume *= tmpDeno;
+
+            var retNume = xNume + yNume;
+
+            var gcd = Gcd(xDeno, retNume);
+            xDeno /= gcd;
+            retNume /= gcd;
+
+            return new BmsTimestamp()
+            {
+                Section = retNume / xDeno,
+                Denominator = xDeno,
+                Numerator = retNume % xDeno
+            };
+        }
+
         public static bool operator >(BmsTimestamp x, BmsTimestamp y)
         {
             return x.CompareTo(y) > 0;
