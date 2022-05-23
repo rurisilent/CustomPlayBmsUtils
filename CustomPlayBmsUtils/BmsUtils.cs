@@ -87,7 +87,7 @@ namespace CustomPlayBmsUtils
         /// <returns>BMS 时间戳（Section = 0：精确结果，Section = 1：模糊结果）</returns>
         public static BmsTimestamp TimestampToFraction(float lTime, float rTime, float nTime)
         {
-            const float THRESHOLD = 0.001f;
+            const float THRESHOLD = 0.0001f;
             const float DENO_LIMIT = 192;
 
             float target = (nTime - lTime) / (rTime - lTime);
