@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace CustomPlayBmsUtils
@@ -9,6 +10,84 @@ namespace CustomPlayBmsUtils
         {
             const string hexSheet = "0123456789ABCDEF";
             return hexSheet.IndexOf(hexCode[0]) * 16 + hexSheet.IndexOf(hexCode[1]);
+        }
+
+        public static string DecToHex(int n)
+        {
+            const string hexSheet = "0123456789ABCDEF";
+            List<char> temp = new List<char>();
+
+            while (n % 16 != n)
+            {
+                temp.Add(hexSheet[n % 16]);
+                n /= 16;
+            }
+
+            temp.Add(hexSheet[n % 16]);
+            if (temp.Count == 1) temp.Add('0');
+
+            StringBuilder ret = new StringBuilder();
+            int count = temp.Count;
+            for (int i = count - 1; i >= 0; i--)
+            {
+                ret.Append(temp[i]);
+            }
+
+            return ret.ToString();
+        }
+
+        public static string IntToSecID(int n)
+        {
+            if (n < 10) return $"00{n}";
+            else if (n < 100) return $"0{n}";
+            else return $"{n}";
+        }
+
+        public static int LCMTimestamp(List<BmsDataBpm> timestamps)
+        {
+            int count = timestamps.Count;
+            int finDeno = 1;
+            int gcd;
+            for (int i = 0; i < count; i++)
+            {
+                gcd = Gcd(finDeno, timestamps[i].Denominator);
+                finDeno = timestamps[i].Denominator * finDeno / gcd;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                timestamps[i].Numerator *= finDeno / timestamps[i].Denominator;
+                timestamps[i].Denominator = finDeno;
+            }
+
+            return finDeno;
+        }
+
+        public static int LCMTimestamp(List<BmsDataBlock> timestamps)
+        {
+            int count = timestamps.Count;
+            int finDeno = 1;
+            int gcd;
+            for (int i = 0; i < count; i++)
+            {
+                gcd = Gcd(finDeno, timestamps[i].Denominator);
+                finDeno = timestamps[i].Denominator * finDeno / gcd;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                timestamps[i].Numerator *= finDeno / timestamps[i].Denominator;
+                timestamps[i].Denominator = finDeno;
+            }
+
+            return finDeno;
+        }
+
+        private static int Gcd(int a, int b)
+        {
+            if (a <= 0 || b <= 0) return 0;
+            if (a % b == 0) return b;
+            else return Gcd(b, a % b);
         }
 
         public static string AppendTrackToType(string type, string track)
@@ -84,7 +163,7 @@ namespace CustomPlayBmsUtils
         /// <param name="lTime">左边界</param>
         /// <param name="rTime">右边界</param>
         /// <param name="nTime">时间</param>
-        /// <returns>BMS 时间戳（Section = 0：精确结果，Section = 1：模糊结果）</returns>
+        /// <returns>BMS 时间戳</returns>
         public static BmsTimestamp TimestampToFraction(float lTime, float rTime, float nTime)
         {
             const float THRESHOLD = 0.0001f;
@@ -95,7 +174,7 @@ namespace CustomPlayBmsUtils
             int deno = 1;
             int nume = 0;
             int direction = 1;
-            int section = 1;
+            int section = 0;
 
             float ret = 0;
 

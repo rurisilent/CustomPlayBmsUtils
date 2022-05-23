@@ -199,12 +199,12 @@ namespace CustomPlayBmsUtils
         int _size = 0;
 
         public int Count
-        { 
+        {
             get { return _size; }
         }
 
         public KeyValuePair<string, string> this[int i]
-        { 
+        {
             get
             {
                 if (i < _size)
@@ -214,11 +214,14 @@ namespace CustomPlayBmsUtils
             }
         }
 
-        public void Add(string code, string caption)
+        public bool Add(string code, string caption)
         {
+            if (_code.Contains(code))
+                return false;
             _size++;
             _code.Add(code);
             _caption.Add(caption);
+            return true;
         }
 
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
@@ -259,7 +262,7 @@ namespace CustomPlayBmsUtils
 
         public void Dispose()
         {
-            
+
         }
 
         public bool MoveNext()
@@ -294,6 +297,44 @@ namespace CustomPlayBmsUtils
                 }
                 else if (xFloat < yFloat) return -1;
                 else return 0;
+            }
+        }
+    }
+
+    class BmsBlockComparer : IComparer<BmsDataBlock>
+    {
+        public int Compare(BmsDataBlock x, BmsDataBlock y)
+        {
+            if (x.Section > y.Section)
+            {
+                return 1;
+            }
+            else if (x.Section < y.Section)
+            {
+                return -1;
+            }
+            else
+            {
+                if (BmsUtils.HexToDec(x.Track) > BmsUtils.HexToDec(y.Track))
+                {
+                    return 1;
+                }
+                else if (BmsUtils.HexToDec(x.Track) < BmsUtils.HexToDec(y.Track))
+                {
+                    return -1;
+                }
+                else
+                {
+                    if (x > y)
+                    {
+                        return 1;
+                    }
+                    else if (x < y) return -1;
+                    else
+                    {
+                        return 0;
+                    }
+                }
             }
         }
     }
