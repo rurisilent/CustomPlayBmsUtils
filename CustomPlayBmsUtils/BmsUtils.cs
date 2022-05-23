@@ -120,9 +120,9 @@ namespace CustomPlayBmsUtils
                             do
                             {
                                 nume++;
-                            } while (nume % (tempDeno - 1) != 0 && nume <= deno);
+                            } while (nume % (tempDeno - 1) != 0);
 
-                            if (nume > deno) nume = deno;
+                            //if (nume > deno) nume = deno;
                             tempDeno--;
                             deno /= tempDeno;
                             nume /= tempDeno;
