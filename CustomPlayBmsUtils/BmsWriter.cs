@@ -119,6 +119,7 @@ namespace CustomPlayBmsUtils
 
                 int ptSec = 0;
                 bool written = false;
+                StringBuilder ret = new StringBuilder();
 
                 int ptDataSection = 0;
                 int ptDataBpm = 0;
@@ -165,22 +166,23 @@ namespace CustomPlayBmsUtils
                     {
                         var finDeno = BmsUtils.LCMTimestamp(tempBpm);
                         tempBpm.Sort(new BmsTimestampComparer());
-                        string ret = $"#{BmsUtils.IntToSecID(ptSec)}{Const.TRACK_BPM}:";
+                        ret.Clear();
+                        ret.Append($"#{BmsUtils.IntToSecID(ptSec)}{Const.TRACK_BPM}:");
                         int pt = 0;
                         for (int i = 0; i < finDeno; i++)
                         {
                             if (pt < tempBpm.Count && tempBpm[pt] == new BmsTimestamp(ptSec, i, finDeno))
                             {
-                                ret += BmsUtils.DecToHex((int)Math.Round(tempBpm[pt].BPM));
+                                ret.Append(BmsUtils.DecToHex((int)Math.Round(tempBpm[pt].BPM)));
                                 pt++;
                             }
                             else
                             {
-                                ret += "00";
+                                ret.Append("00");
                             }
                         }
-                        sb.AppendLine(ret);
-                        _output?.Log(ret);
+                        sb.AppendLine(ret.ToString());
+                        _output?.Log(ret.ToString());
                         written = true;
                     }
 
@@ -188,22 +190,23 @@ namespace CustomPlayBmsUtils
                     {
                         var finDeno = BmsUtils.LCMTimestamp(tempBpmFloat);
                         tempBpmFloat.Sort(new BmsTimestampComparer());
-                        string ret = $"#{BmsUtils.IntToSecID(ptSec)}{Const.TRACK_BPMFLOAT}:";
+                        ret.Clear();
+                        ret.Append($"#{BmsUtils.IntToSecID(ptSec)}{Const.TRACK_BPMFLOAT}:");
                         int pt = 0;
                         for (int i = 0; i < finDeno; i++)
                         {
                             if (pt < tempBpmFloat.Count && tempBpmFloat[pt] == new BmsTimestamp(ptSec, i, finDeno))
                             {
-                                ret += _bpmHashSheet[(int)tempBpmFloat[pt].BPM];
+                                ret.Append(_bpmHashSheet[(int)tempBpmFloat[pt].BPM]);
                                 pt++;
                             }
                             else
                             {
-                                ret += "00";
+                                ret.Append("00");
                             }
                         }
-                        sb.AppendLine(ret);
-                        _output?.Log(ret);
+                        sb.AppendLine(ret.ToString());
+                        _output?.Log(ret.ToString());
                         written = true;
                     }
 
@@ -229,22 +232,23 @@ namespace CustomPlayBmsUtils
                                 {
                                     var finDeno = BmsUtils.LCMTimestamp(tempBlock);
                                     tempBlock.Sort(new BmsTimestampComparer());
-                                    string ret = $"#{BmsUtils.IntToSecID(ptSec)}{trackId}:";
+                                    ret.Clear();
+                                    ret.Append($"#{BmsUtils.IntToSecID(ptSec)}{trackId}:");
                                     int pt = 0;
                                     for (int i = 0; i < finDeno; i++)
                                     {
                                         if (pt < tempBlock.Count && tempBlock[pt] == new BmsTimestamp(ptSec, i, finDeno))
                                         {
-                                            ret += tempBlock[pt].Code;
+                                            ret.Append(tempBlock[pt].Code);
                                             pt++;
                                         }
                                         else
                                         {
-                                            ret += "00";
+                                            ret.Append("00");
                                         }
                                     }
-                                    sb.AppendLine(ret);
-                                    _output?.Log(ret);
+                                    sb.AppendLine(ret.ToString());
+                                    _output?.Log(ret.ToString());
                                     written = true;
                                 }
 
@@ -260,22 +264,23 @@ namespace CustomPlayBmsUtils
                     {
                         var finDeno = BmsUtils.LCMTimestamp(tempBlock);
                         tempBlock.Sort(new BmsTimestampComparer());
-                        string ret = $"#{BmsUtils.IntToSecID(ptSec)}{trackId}:";
+                        ret.Clear();
+                        ret.Append($"#{BmsUtils.IntToSecID(ptSec)}{trackId}:");
                         int pt = 0;
                         for (int i = 0; i < finDeno; i++)
                         {
                             if (pt < tempBlock.Count && tempBlock[pt] == new BmsTimestamp(ptSec, i, finDeno))
                             {
-                                ret += tempBlock[pt].Code;
+                                ret.Append(tempBlock[pt].Code);
                                 pt++;
                             }
                             else
                             {
-                                ret += "00";
+                                ret.Append("00");
                             }
                         }
-                        sb.AppendLine(ret);
-                        _output?.Log(ret);
+                        sb.AppendLine(ret.ToString());
+                        _output?.Log(ret.ToString());
                         written = true;
                     }
 
