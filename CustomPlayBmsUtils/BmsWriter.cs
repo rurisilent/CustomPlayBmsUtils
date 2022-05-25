@@ -115,6 +115,8 @@ namespace CustomPlayBmsUtils
 
             if (_data != null)
             {
+                if (_data.DataBlockList.Count <= 0 && _data.DataBpmList.Count <= 0 && _data.SectionList.Count <= 0) return;
+
                 _data.DataBlockList.Sort(new BmsBlockComparer());
 
                 int ptSec = 0;
