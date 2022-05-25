@@ -115,6 +115,8 @@ namespace CustomPlayBmsUtils
 
             if (_data != null)
             {
+                _output?.Log($"{_data.DataBlockList.Count} : {_data.DataBpmList.Count} : {_data.SectionList.Count}");
+
                 if (_data.DataBlockList.Count <= 0 && _data.DataBpmList.Count <= 0 && _data.SectionList.Count <= 0) return;
 
                 _data.DataBlockList.Sort(new BmsBlockComparer());
@@ -127,7 +129,9 @@ namespace CustomPlayBmsUtils
                 int ptDataBpm = 0;
                 int ptDataBlock = 0;
 
-                int limit = _data.DataBlockList[_data.DataBlockList.Count - 1].Section;
+                int limit = 0;
+                if (_data.DataBlockList.Count > 0)
+                    limit = _data.DataBlockList[_data.DataBlockList.Count - 1].Section;
                 if (_data.DataBpmList.Count > 0)
                     limit = Math.Max(limit, _data.DataBpmList[_data.DataBpmList.Count - 1].Section);
                 if (_data.SectionList.Count > 0)
