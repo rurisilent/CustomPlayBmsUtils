@@ -28,6 +28,7 @@ namespace CustomPlayBmsUtils
         public float BPM;
         public string Level;
         public int Difficulty;
+        public string Design;
     }
 
     public class BmsSection

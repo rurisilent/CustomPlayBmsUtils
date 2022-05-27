@@ -49,6 +49,7 @@ namespace CustomPlayBmsUtils
                 if (bmsLine[pt].Contains("#BPM ")) float.TryParse(bmsLine[pt].Replace("#BPM ", ""), out _info.BPM);
                 if (bmsLine[pt].Contains("#PLAYLEVEL ")) _info.Level = bmsLine[pt].Replace("#PLAYLEVEL ", "");
                 if (bmsLine[pt].Contains("#RANK ")) int.TryParse(bmsLine[pt].Replace("#RANK ", ""), out _info.Difficulty);
+                if (bmsLine[pt].Contains("#LEVELDESIGN ")) _info.Design = bmsLine[pt].Replace("#LEVELDESIGN ", "");
 
                 if (bmsLine[pt].Contains("#BPM"))
                 {

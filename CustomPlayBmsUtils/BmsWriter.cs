@@ -70,6 +70,7 @@ namespace CustomPlayBmsUtils
             sb.AppendLine($"#BPM {_info.BPM}");
             sb.AppendLine($"#PLAYLEVEL {_info.Level}");
             sb.AppendLine($"#RANK {_info.Difficulty}");
+            if (_info.Design != null) sb.AppendLine($"#LEVELDESIGN {_info.Design}");
             sb.AppendLine("");
             sb.AppendLine("");
             sb.AppendLine("#LNTYPE 1");
@@ -122,7 +123,7 @@ namespace CustomPlayBmsUtils
                 _data.DataBlockList.Sort(new BmsBlockComparer());
 
                 int ptSec = 0;
-                bool written = false;
+                bool written;
                 StringBuilder ret = new StringBuilder();
 
                 int ptDataSection = 0;
