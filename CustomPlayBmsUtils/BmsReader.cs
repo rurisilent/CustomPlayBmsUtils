@@ -20,6 +20,21 @@ namespace CustomPlayBmsUtils
             get { return _data; }
         }
 
+        public static string FindMusicName(string bmsData, string tag)
+        {
+            string[] bmsLine = bmsData.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
+            int index = 0;
+            if (FindLine(bmsLine, tag, ref index))
+            {
+                return bmsLine[index].Replace(tag, "");
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -137,7 +152,7 @@ namespace CustomPlayBmsUtils
             //finish reading
         }
 
-        private bool FindLine(string[] data, string target, ref int index)
+        private static bool FindLine(string[] data, string target, ref int index)
         {
             var limit = data.Length;
             while (index < limit)
