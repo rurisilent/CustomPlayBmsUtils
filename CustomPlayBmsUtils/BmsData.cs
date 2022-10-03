@@ -82,6 +82,8 @@ namespace CustomPlayBmsUtils
 
         public int CompareTo(BmsTimestamp obj)
         {
+            if (Section == obj.Section && Denominator == obj.Denominator && Numerator == obj.Numerator) return 0;
+
             if (Section > obj.Section) return 1;
             else if (Section < obj.Section) return -1;
             else
@@ -178,7 +180,7 @@ namespace CustomPlayBmsUtils
 
         public override int GetHashCode()
         {
-            return Section * 10000 + Denominator * 100 + Numerator * 1;
+            return Section * 10000000 + Denominator * 1000 + Numerator * 1;
         }
     }
 
