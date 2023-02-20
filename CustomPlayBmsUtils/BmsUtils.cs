@@ -50,7 +50,7 @@ namespace CustomPlayBmsUtils
             int gcd;
             for (int i = 0; i < count; i++)
             {
-                gcd = Gcd(finDeno, timestamps[i].Denominator);
+                gcd = GCD(finDeno, timestamps[i].Denominator);
                 finDeno = timestamps[i].Denominator * finDeno / gcd;
             }
 
@@ -70,7 +70,7 @@ namespace CustomPlayBmsUtils
             int gcd;
             for (int i = 0; i < count; i++)
             {
-                gcd = Gcd(finDeno, timestamps[i].Denominator);
+                gcd = GCD(finDeno, timestamps[i].Denominator);
                 finDeno = timestamps[i].Denominator * finDeno / gcd;
             }
 
@@ -83,11 +83,11 @@ namespace CustomPlayBmsUtils
             return finDeno;
         }
 
-        private static int Gcd(int a, int b)
+        private static int GCD(int a, int b)
         {
-            if (a <= 0 || b <= 0) return 0;
+            if (b > a) return GCD(b, a);
             if (a % b == 0) return b;
-            else return Gcd(b, a % b);
+            else return GCD(b, a % b);
         }
 
         public static string AppendTrackToType(string type, string track)
@@ -166,7 +166,7 @@ namespace CustomPlayBmsUtils
         /// <returns>BMS 时间戳</returns>
         public static BmsTimestamp TimestampToFraction(float lTime, float rTime, float nTime)
         {
-            const float THRESHOLD = 0.00001f;
+            const float THRESHOLD = 0.0001f;
             const float DENO_LIMIT = 384;
 
             float target = (nTime - lTime) / (rTime - lTime);
@@ -176,11 +176,9 @@ namespace CustomPlayBmsUtils
             int direction = 1;
             int section = 0;
 
-            float ret = 0;
-
-            while (deno <= DENO_LIMIT)
+            while (deno < DENO_LIMIT)
             {
-                ret = (float)nume / deno;
+                float ret = (float)nume / deno;
                 if (Math.Abs(target - ret) <= THRESHOLD)
                 {
                     section = 0;

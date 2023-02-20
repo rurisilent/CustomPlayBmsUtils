@@ -103,8 +103,15 @@ namespace CustomPlayBmsUtils
         public void Simplify()
         {
             int gcd = Gcd(Denominator, Numerator);
-            Denominator /= gcd;
-            Numerator /= gcd;
+            if (gcd == 0)
+            {
+                if (Denominator > 0 && Numerator == 0) Denominator = 1;
+            }
+            else
+            {
+                Denominator /= gcd;
+                Numerator /= gcd;
+            }
         }
 
         private static int Gcd(int a, int b)
