@@ -38,6 +38,20 @@ namespace CustomPlayBmsUtils
             _wavList = wavList;
             _data = data;
             _output = output;
+
+            SimplifyData();
+        }
+
+        private void SimplifyData()
+        {
+            foreach (BmsTimestamp timestamp in _data.DataBpmList)
+            {
+                timestamp.Simplify();
+            }
+            foreach (BmsTimestamp timestamp in _data.DataBlockList)
+            {
+                timestamp.Simplify();
+            }
         }
 
         public void Write(string path)
